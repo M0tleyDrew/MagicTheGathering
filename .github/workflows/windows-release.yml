@@ -1,0 +1,77 @@
+name: Windows desktop release
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - .github/workflows/windows-release.yml
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Release tag
+        required: true
+        default: v0.1.0
+
+permissions:
+  contents: write
+
+concurrency:
+  group: windows-desktop-release
+  cancel-in-progress: false
+
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    env:
+      RELEASE_TAG: ${{ inputs.tag || 'v0.1.0' }}
+      ZIP_NAME: SaltyBananaSlugs-MTG-Deck-Editor-Windows-x64.zip
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Use Node.js 24
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install locked dependencies
+        run: npm ci
+
+      - name: Build portable Windows app
+        run: npm run desktop:package:win
+
+      - name: Retain workflow artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: SaltyBananaSlugs-MTG-Deck-Editor-Windows-x64
+          path: |
+            release/${{ env.ZIP_NAME }}
+            release/${{ env.ZIP_NAME }}.sha256.txt
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: Create or refresh GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if gh release view "$RELEASE_TAG" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            gh release upload "$RELEASE_TAG" \
+              "release/$ZIP_NAME#Portable Windows x64 build" \
+              "release/$ZIP_NAME.sha256.txt#SHA-256 checksum" \
+              --clobber \
+              --repo "$GITHUB_REPOSITORY"
+            gh release edit "$RELEASE_TAG" \
+              --notes-file .github/windows-release-notes.md \
+              --title "SaltyBananaSlug's MTG Deck Editor $RELEASE_TAG" \
+              --repo "$GITHUB_REPOSITORY"
+          else
+            gh release create "$RELEASE_TAG" \
+              "release/$ZIP_NAME#Portable Windows x64 build" \
+              "release/$ZIP_NAME.sha256.txt#SHA-256 checksum" \
+              --target "$GITHUB_SHA" \
+              --title "SaltyBananaSlug's MTG Deck Editor $RELEASE_TAG" \
+              --notes-file .github/windows-release-notes.md \
+              --repo "$GITHUB_REPOSITORY"
+          fi

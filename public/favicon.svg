@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="SaltyBananaSlug">
+  <defs><radialGradient id="fbg" cx="50%" cy="42%" r="65%"><stop offset="0%" stop-color="#526b3a"/><stop offset="100%" stop-color="#182414"/></radialGradient><linearGradient id="fslug" x1="8" y1="19" x2="58" y2="47" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#ffe773"/><stop offset="45%" stop-color="#f4bf32"/><stop offset="100%" stop-color="#bd8420"/></linearGradient></defs>
+  <circle cx="32" cy="32" r="30" fill="url(#fbg)"/>
+  <path d="M10 40.2c2.9 7.7 19.7 10.9 35.4 6.9 8-2.1 12.1-5.5 12.1-10.2 0-4.5-3.2-8.6-9.3-10.9-6.3-2.3-13.3-1.3-20.8 1.6-7.4 2.8-13.5 2.9-18.5-1.4-1.2-1-3 .1-2.7 1.7.7 4.1 3.2 7.2 7.2 9.2-2.8.6-5.8.6-8.8.1-1.4-.2-2.4 1.4-1.4 2.5 1.3 1.3 3.5 1.8 6.8.5z" fill="url(#fslug)" stroke="#5e3c13" stroke-width="2" stroke-linejoin="round"/>
+  <path d="M49.5 27.4c2-4.8 4.6-7.3 7.8-7.7M45.6 26.7c1.2-5.1 3.3-8.1 6.5-9" fill="none" stroke="#f6ce43" stroke-width="2.5" stroke-linecap="round"/><circle cx="57.8" cy="19.6" r="2.2" fill="#ffe773" stroke="#5e3c13" stroke-width="1.4"/><circle cx="52.7" cy="17.3" r="2.1" fill="#ffe773" stroke="#5e3c13" stroke-width="1.4"/><circle cx="53.2" cy="34.3" r="2.1" fill="#1c1207"/><circle cx="53.9" cy="33.5" r=".7" fill="#fff7b8"/>
+</svg>
